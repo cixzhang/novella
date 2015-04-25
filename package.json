@@ -1,0 +1,11 @@
+{
+  "name": "novella",
+  "version": "0.0.0",
+  "description": "Local filesystem CMS for Graphic novels.",
+  "dependencies": {
+    "express": "^4.12.3",
+    "lodash": "^3.6.0",
+    "promise": "^7.0.0",
+    "socket.io": "^1.3.5"
+  }
+}
