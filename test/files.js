@@ -4,8 +4,8 @@ var fs = require('fs'),
 
 describe('a files data manager', function () {
 
-  var Files = require('../files'),
-      dispatch = new require('../dispatcher')(),
+  var Files = require('../lib/files'),
+      dispatch = new require('../lib/dispatcher')(),
       store;
 
   beforeEach(function () {

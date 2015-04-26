@@ -21,8 +21,8 @@ var //_ = require('lodash'),
     //app = require('express')(),
     //http = require('http').Server(app),
     //io = require('socket.io')(http),
-    Dispatcher = require('./dispatcher.js'),
-    Files = require('./files');
+    Dispatcher = require('./lib/dispatcher.js'),
+    Files = require('./lib/files');
 
 var Novella = function () {
   Dispatcher.call(this);
