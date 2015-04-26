@@ -5,16 +5,24 @@ var fs = require('fs'),
 
 describe('a files data manager', function () {
 
-  var dataDir = __dirname + '/data',
-      fileA = __dirname + '/data/A.json',
-      fileB = __dirname + '/data/B.json',
-      dataA = 1,
-      dataB = 2,
-      store, dispatch;
+  var store, dispatch,
+      dataDir = __dirname + '/data',
+      fileData = {
+            name: 'test',
+            file: dataDir + '/test.json',
+            data: 1
+          };
+
+  var cleanup = function () {
+        var contents = fs.readdirSync(dataDir);
+        contents.forEach(function (file) {
+          fs.unlinkSync(dataDir + '/' + file);
+        });
+      };
 
   before(function () {
     dispatch = new Dispatcher();
-    fs.writeFileSync(fileA, JSON.stringify(dataA));
+    fs.writeFileSync(fileData.file, JSON.stringify(fileData.data));
   });
 
   beforeEach(function () {
@@ -26,63 +34,72 @@ describe('a files data manager', function () {
     store.teardown();
   });
 
-  it('can exist', function () {
-    expect(store).to.exist;
-  });
-
   it('can be watched', function (done) {
     dispatch.watch(store, 'ready', done);
   });
 
-  it('can read data from a directory', function (done) {
+  it('initializes with data from a directory', function (done) {
     dispatch.watch(store, 'ready', function () {
-      expect(store.data()).to.include.keys('A');
+      expect(store.data()).to.include.keys(fileData.name);
       done();
     });
   });
 
-  it('can add new data when a new file is added', function (done) {
-    var onReady = function () {
-          fs.writeFileSync(fileB, JSON.stringify(dataB));
-        },
-        onUpdate = function () {
-          expect(store.data()).to.include.keys('B');
-          done();
-        };
+  describe('watches for file changes and', function () {
 
-    dispatch.watch(store, 'ready', onReady);
-    dispatch.watch(store, 'update', onUpdate);
+    before(cleanup);
+    after(cleanup);
 
-    after(function () { fs.unlink(dataB); });
+    it('adds new data when a new file is added', function (done) {
+      var onReady = function () {
+            fs.writeFileSync(fileData.file, JSON.stringify(fileData.data));
+          },
+          onUpdate = function () {
+            expect(store.data()).to.include.keys(fileData.name);
+            done();
+          };
+
+      dispatch.watch(store, 'ready', onReady);
+      dispatch.watch(store, 'update', onUpdate);
+    });
+
+    it('updates data when a file is updated', function (done) {
+      var newData = 2,
+          onReady = function () {
+            fs.writeFileSync(fileData.file, JSON.stringify(newData));
+          },
+          onUpdate = function () {
+            expect(store.data()[fileData.name]).to.equal(newData);
+            done();
+
+            fs.writeFileSync(fileData.file, JSON.stringify(fileData.data));
+          };
+
+      dispatch.watch(store, 'ready', onReady);
+      dispatch.watch(store, 'update', onUpdate);
+    });
+
+    it('removes data when a file is removed', function (done) {
+      var onReady = function () {
+            fs.unlinkSync(fileData.file);
+          },
+          onUpdate = function () {
+            expect(store.data()).to.not.include.keys(fileData.name);
+            done();
+          };
+
+      dispatch.watch(store, 'ready', onReady);
+      dispatch.watch(store, 'update', onUpdate);
+    });
   });
 
-  it('can remove data when a file is removed', function (done) {
-    var onReady = function () {
-          fs.unlinkSync(dataB);
-        },
-        onUpdate = function () {
-          expect(store.data()).to.not.include.keys('B');
-          done();
-        };
+  describe('accepts data patches and', function () {
 
-    fs.writeFileSync(fileB, JSON.stringify(dataB));
-    dispatch.watch(store, 'ready', onReady);
-    dispatch.watch(store, 'update', onUpdate);
-  });
+    before(cleanup);
+    after(cleanup);
 
-  it('can update data when a file is updated', function (done) {
-    var newData = 2,
-        onReady = function () {
-          fs.writeFileSync(fileA, JSON.stringify(newData));
-        },
-        onUpdate = function () {
-          expect(store.data().A).to.equal(newData);
-          done();
-        };
-
-    dispatch.watch(store, 'ready', onReady);
-    dispatch.watch(store, 'update', onUpdate);
-
-    after(function () { fs.writeFileSync(fileA, JSON.stringify(dataA)); });
+    it('creates files when given a create patch');
+    it('updates files when given an update patch');
+    it('deletes files when given a delete patch');
   });
 });
