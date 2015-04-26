@@ -1,12 +1,16 @@
 var fs = require('fs'),
     expect = require('chai').expect,
-    dataDir = __dirname + '/data';
+    Files = require('../lib/files'),
+    Dispatcher = require('../lib/dispatcher');
 
 describe('a files data manager', function () {
 
-  var Files = require('../lib/files'),
-      dispatch = new require('../lib/dispatcher')(),
-      store;
+  var dataDir = __dirname + '/data',
+      store, dispatch;
+
+  before(function () {
+    dispatch = new Dispatcher();
+  });
 
   beforeEach(function () {
     store = new Files(dataDir);
