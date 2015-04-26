@@ -23,7 +23,7 @@ describe('a dispatcher', function () {
     expect(dispatchA.trigger).to.be.a('function');
   });
 
-  it('can call a callback with data when an event is triggered', function () {
+  it('can call a callback when triggered', function () {
     dispatchA.on(e, callback);
     dispatchA.trigger(e, 2);
     expect(val).to.equal(2);
