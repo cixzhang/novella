@@ -12,6 +12,8 @@ var Dispatcher = module.exports = function () {
   this.watch = watch;
   this.unwatch = unwatch;
 
+  return this;
+
   function trigger (event, data) {
     if (!events[event]) return;
 

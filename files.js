@@ -34,81 +34,195 @@ Patch Object:
 var Files = module.exports = function (path) {
   Dispatcher.call(this);
   this.path = path;
-  this.queue = [];
+
+  // queues
+  this.patches = [];
+  this.watches = [];
 
   this._ready = null;
   this._data = {};
 
-  var _loop = loop.bind(this),
-      _watch = watch.bind(this);
-
-  this.ready().then(_watch).then(_loop);
+  this.ready()
+      .then(watch.bind(this))
+      .then(loop.bind(this));
   return this;
 };
 
 Files.prototype.data = function () { return this._data; }
 
 Files.prototype.ready = function () {
-  var trigger = function () { this.trigger('ready'); }.bind(this),
-      logError = function (e) { console.log(e); },
-      getData = function (data, filename) {
-          var contents = data.contents,
-              filename = data.file;
+  var doTrigger = function () { this.trigger('ready'); }.bind(this),
+      logError = function (e) { console.log(e); };
 
-          if (contents instanceof Array) {
-            var promises = _.map(contents, function (file) {
-              return read(filename + '/' + file).then(getData, logError);
-            });
-            return Promise.all(promises);
-          }
-
-          var hierarchy = filename.replace(this.path, '').split('/'),
-              child = hierarchy.pop().replace('.json', ''),
-              parent = hierarchy.pop();
-
-          if (parent) {
-            this._data[parent] = this._data[parent] || {};
-            this._data[parent][child] = JSON.parse(contents);
-          } else this._data[child] = JSON.parse(contents);
-        }.bind(this);
-
-  if (!this._ready) this._ready = read(this.path).then(getData, logError);
-  return this._ready.then(trigger);
+  if (!this._ready) this._ready = read(this.path).then(getData.bind(this), logError);
+  return this._ready.then(doTrigger);
 }
 
 Files.prototype.patch = function (patches) {
   if (patches instanceof Array)
-    while (patches.length) this.queue.push(patches.unshift());
-  else this.queue.push(patches);
+    while (patches.length) this.patches.push(patches.unshift());
+  else this.patches.push(patches);
   return this;
 }
 
-/** Private functions
-  * -----------------
+Files.prototype.teardown = function () {
+  this._ready = null;
+}
+
+/** Private loops
+  * -------------
   */
 
 function loop () {
-  var boundLoop = loop.bind(this);
-  if (!this.queue.length) return;
-
-  console.log('Streaming to filesystem...');
-  var start = time = Date.now(),
-      len = this.queue.length;
-  while (this.queue.length > 0 && time - start < 100) {
-    patch(this.queue.shift(), this.path);
-    time = Date.now();
-  }
-  console.log((len - this.queue.length) + 'patches done.');
-
-  setTimeout(boundLoop, 10000);
+  patchLoop.call(this);
+  watchLoop.call(this);
 }
+
+function patchLoop () {
+  var boundLoop = patchLoop.bind(this);
+
+  if (this.patches.length) {
+    // console.log('Streaming to filesystem...');
+    var start = time = Date.now(),
+        len = this.patches.length,
+        aPatch;
+
+    while (this.patches.length > 0 && time - start < 100) {
+      aPatch = this.patches.shift();
+      patchMethods[aPatch.method](aPatch, this.path);
+      time = Date.now();
+    }
+    // console.log((len - this.patches.length) + ' file(s) updated.');
+  }
+
+  if (this._ready) setTimeout(boundLoop, 200);
+}
+
+function watchLoop () {
+  var boundLoop = watchLoop.bind(this);
+
+  if (this.watches.length) {
+    // console.log('Updating data...');
+    var trigger = function () { this.trigger('update'); }.bind(this),
+        start = time = Date.now(),
+        len = this.watches.length,
+        promises = [],
+        aWatch;
+
+    while (this.watches.length > 0 && time - start < 100) {
+      aWatch = this.watches.shift();
+      promises.push(watchMethods[aWatch.method].call(this, aWatch.filepath));
+      time = Date.now();
+    }
+
+    Promise.all(promises).then(trigger);
+    // console.log((len - this.watches.length) + ' object(s) updated.');
+  }
+
+  if (this._ready) setTimeout(boundLoop, 200);
+}
+
+/** Watching
+  * --------
+  */
 
 function watch () {
-  // TODO
-  fs.watch(this.path, function (event, filename) {
-    console.log(arguments);
+  var trigger = this.trigger.bind(this),
+      watches = this.watches,
+      callback = function (method, filename, path) {
+        watches.push({
+          method: method,
+          filepath: path + '/' + filename
+        });
+      };
+
+  rewatch(this.path, callback);
+}
+
+function rewatch (path, callback) { // recursive watch
+  fs.watch(path, function (event, filename) {
+    callback(event, filename, path);
+  });
+
+  read(path).then(function (data) {
+    var contents = data.contents;
+    _.each(data.contents, function (filepath) {
+      if (fs.lstatSync(path + '/' + filepath).isDirectory())
+        rewatch(path + '/' + filepath, callback);
+    });
   });
 }
+
+var watchMethods = {
+  rename: function (filepath) {
+    var boundGet = getData.bind(this),
+        boundRemove = removeData.bind(this);
+    try { return read(filepath).then(boundGet); }
+    catch (e) { return Promise.resolve(boundRemove(filepath)); }
+  },
+  change: function (filepath) {
+    var boundGet = getData.bind(this);
+    return read(filepath).then(boundGet);
+  }
+}
+
+/** Data Ingestion
+  * --------------
+  */
+
+function getData (data) {
+  var contents = data.contents,
+      filename = data.file,
+      bound = getData.bind(this);
+
+  if (contents instanceof Array) {
+    var promises = _.map(contents, function (file) {
+      return read(filename + '/' + file).then(bound);
+    });
+    return Promise.all(promises);
+  }
+
+  var hierarchy = filename.replace(this.path + '/', '').split('/'),
+      child = hierarchy.pop().replace('.json', '');
+
+  var obj = this._data;
+  hierarchy.forEach(function (tier) {
+    if (!obj[tier]) obj[tier] = {};
+    obj = obj[tier];
+  });
+  obj[child] = JSON.parse(contents);
+}
+
+function removeData (filename) {
+  var hierarchy = filename.replace(this.path + '/', '').split('/'),
+      child = hierarchy.pop().replace('.json', '');
+
+  var obj = this._data;
+  hierarchy.forEach(function (tier) {
+    obj = obj[tier];
+  });
+  delete obj[child];
+}
+
+/** Patching
+  * --------
+  */
+
+function patched(fn) {
+  return function (ptch, dataPath) {
+    var typePath = ptch.type && ptch.type + '/' || '',
+      idPath = ptch.id && ptch.id + '.json' || '',
+      path = dataPath + '/' + typePath + idPath,
+      data = JSON.stringify(ptch.data, null, 2);
+    return fn(path, data);
+  }
+}
+
+var patchMethods = {
+  'create': patched(write),
+  'update': patched(write),
+  'delete': patched(unlink)
+};
 
 /** CRUD
   * ----
@@ -119,7 +233,7 @@ function read (filepath) {
   if (fs.lstatSync(filepath).isDirectory()) fn = fs.readdir.bind(fs);
   return new Promise(function (res, rej) {
     fn(filepath, function (err, data) {
-      if (err) rej(err);
+      if (err) rej({error: err, file: filepath});
       else res({contents: data, file: filepath}); // res only accepts one arg
     });
   });
@@ -157,26 +271,3 @@ function unlink (path) {
     });
   });
 }
-
-
-/** Patching
-  * --------
-  */
-
-function patched(fn) {
-  return function (ptch, dataPath) {
-    var typePath = ptch.type && ptch.type + '/' || '',
-      idPath = ptch.id && ptch.id + '.json' || '',
-      path = dataPath + '/' + typePath + idPath,
-      data = JSON.stringify(ptch.data, null, 2);
-    return fn(path, data);
-  }
-}
-
-var methods = {
-  'create': patched(write),
-  'update': patched(write),
-  'delete': patched(unlink)
-};
-
-function patch (ptch, path) { methods[ptch.method](ptch, path); }

@@ -28,10 +28,16 @@ var Novella = function () {
   Dispatcher.call(this);
   this.store = new Files('./data');
   this.watch(this.store, 'ready', onReady.bind(this));
+  this.watch(this.store, 'update', onUpdate.bind(this));
 };
 
 function onReady () {
-  console.log(this.store.data());
-};
+  var data = this.store.data();
+  console.log(data);
+}
+
+function onUpdate () {
+  console.log(data);
+}
 
 module.exports = new Novella();
