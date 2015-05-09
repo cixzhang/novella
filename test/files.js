@@ -18,7 +18,10 @@ describe('a files data manager', function () {
             data: 1
           };
 
-  var cleanup = function () { cleanPath(dataDir); };
+  var cleanup = function (done) {
+    cleanPath(dataDir);
+    setTimeout(done, 200);
+  };
 
   var cleanPath = function (path) {
     var contents = fs.readdirSync(path);
