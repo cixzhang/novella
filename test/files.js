@@ -5,7 +5,7 @@ var fs = require('fs'),
 
 describe('a files data manager', function () {
 
-  var store, dispatch,
+  var store, storeData, dispatch,
       dataDir = __dirname + '/data',
       folderData = {
             name: 'folder',
@@ -19,7 +19,7 @@ describe('a files data manager', function () {
           };
 
   var cleanup = function () { cleanPath(dataDir); };
-  
+
   var cleanPath = function (path) {
     var contents = fs.readdirSync(path);
     contents.forEach(function (file) {
@@ -38,6 +38,7 @@ describe('a files data manager', function () {
 
   beforeEach(function () {
     store = new Files(dataDir);
+    storeData = store.data();
   });
 
   afterEach(function () {
@@ -51,7 +52,7 @@ describe('a files data manager', function () {
 
   it('initializes with data from a directory', function (done) {
     dispatch.watch(store, 'ready', function () {
-      expect(store.data()).to.include.keys(fileData.name);
+      expect(storeData).to.include.keys(fileData.name);
       done();
     });
   });
@@ -66,7 +67,7 @@ describe('a files data manager', function () {
             fs.writeFileSync(fileData.path, JSON.stringify(fileData.data));
           },
           onUpdate = function () {
-            expect(store.data()).to.include.keys(fileData.name);
+            expect(storeData).to.include.keys(fileData.name);
             done();
           };
 
@@ -80,7 +81,7 @@ describe('a files data manager', function () {
             fs.writeFileSync(folderData.path + '/' + fileData.typed, JSON.stringify(fileData.data));
           },
           onUpdate = function () {
-            expect(store.data()).to.include.keys(folderData.name);
+            expect(storeData).to.include.keys(folderData.name);
             done();
           };
 
@@ -94,7 +95,7 @@ describe('a files data manager', function () {
             fs.writeFileSync(fileData.path, JSON.stringify(newData));
           },
           onUpdate = function () {
-            expect(store.data()[fileData.name]).to.equal(newData);
+            expect(storeData[fileData.name]).to.equal(newData);
             done();
 
             fs.writeFileSync(fileData.path, JSON.stringify(fileData.data));
@@ -109,7 +110,7 @@ describe('a files data manager', function () {
             fs.unlinkSync(fileData.path);
           },
           onUpdate = function () {
-            expect(store.data()).to.not.include.keys(fileData.name);
+            expect(storeData).to.not.include.keys(fileData.name);
             done();
           };
 
