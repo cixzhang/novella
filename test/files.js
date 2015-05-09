@@ -7,22 +7,33 @@ describe('a files data manager', function () {
 
   var store, dispatch,
       dataDir = __dirname + '/data',
+      folderData = {
+            name: 'folder',
+            path: dataDir + '/folder'
+          };
       fileData = {
             name: 'test',
-            file: dataDir + '/test.json',
+            typed: 'test.json',
+            path: dataDir + '/test.json',
             data: 1
           };
 
-  var cleanup = function () {
-        var contents = fs.readdirSync(dataDir);
-        contents.forEach(function (file) {
-          fs.unlinkSync(dataDir + '/' + file);
-        });
-      };
+  var cleanup = function () { cleanPath(dataDir); };
+  
+  var cleanPath = function (path) {
+    var contents = fs.readdirSync(path);
+    contents.forEach(function (file) {
+      var filepath = path + '/' + file;
+      if (fs.lstatSync(filepath).isDirectory())
+        cleanPath(filepath);
+      else fs.unlinkSync(filepath);
+    });
+    if (path !== dataDir) fs.rmdirSync(path);
+  }
 
   before(function () {
     dispatch = new Dispatcher();
-    fs.writeFileSync(fileData.file, JSON.stringify(fileData.data));
+    fs.writeFileSync(fileData.path, JSON.stringify(fileData.data));
   });
 
   beforeEach(function () {
@@ -52,7 +63,7 @@ describe('a files data manager', function () {
 
     it('adds new data when a new file is added', function (done) {
       var onReady = function () {
-            fs.writeFileSync(fileData.file, JSON.stringify(fileData.data));
+            fs.writeFileSync(fileData.path, JSON.stringify(fileData.data));
           },
           onUpdate = function () {
             expect(store.data()).to.include.keys(fileData.name);
@@ -63,16 +74,30 @@ describe('a files data manager', function () {
       dispatch.watch(store, 'update', onUpdate);
     });
 
+    it('adds new objects when a new directory is created with files', function (done) {
+      var onReady = function () {
+            fs.mkdirSync(folderData.path);
+            fs.writeFileSync(folderData.path + '/' + fileData.typed, JSON.stringify(fileData.data));
+          },
+          onUpdate = function () {
+            expect(store.data()).to.include.keys(folderData.name);
+            done();
+          };
+
+      dispatch.watch(store, 'ready', onReady);
+      dispatch.watch(store, 'update', onUpdate);
+    });
+
     it('updates data when a file is updated', function (done) {
       var newData = 2,
           onReady = function () {
-            fs.writeFileSync(fileData.file, JSON.stringify(newData));
+            fs.writeFileSync(fileData.path, JSON.stringify(newData));
           },
           onUpdate = function () {
             expect(store.data()[fileData.name]).to.equal(newData);
             done();
 
-            fs.writeFileSync(fileData.file, JSON.stringify(fileData.data));
+            fs.writeFileSync(fileData.path, JSON.stringify(fileData.data));
           };
 
       dispatch.watch(store, 'ready', onReady);
@@ -81,7 +106,7 @@ describe('a files data manager', function () {
 
     it('removes data when a file is removed', function (done) {
       var onReady = function () {
-            fs.unlinkSync(fileData.file);
+            fs.unlinkSync(fileData.path);
           },
           onUpdate = function () {
             expect(store.data()).to.not.include.keys(fileData.name);
