@@ -16,11 +16,8 @@
 // 2. an api server that allows the client to CRUD
 // 3. a manager that periodically saves the fs to git
 
-var //_ = require('lodash'),
-    //Promise = require('promise'),
-    //app = require('express')(),
-    //http = require('http').Server(app),
-    //io = require('socket.io')(http),
+var _ = require('lodash'),
+    express = require('express'),
     Dispatcher = require('./lib/dispatcher.js'),
     Files = require('./lib/files');
 
@@ -31,6 +28,21 @@ var Novella = function () {
   this.watch(this.store, 'update', onUpdate.bind(this));
 };
 
+Novella.prototype.start = function () {
+  var app = this.app = express();
+
+  app.get('/', function (req, res) {
+    res.send('Hello World');
+  });
+
+  var server = this.server = this.app.listen(3000, function () {
+    var port = server.address().port;
+    console.log('Novella CMS listening at http://localhost:%s', port);
+  });
+};
+
+
+// Anonymous event handlers
 function onReady () {
   var data = this.store.data();
   console.log(data);
@@ -40,4 +52,7 @@ function onUpdate () {
   console.log(data);
 }
 
-module.exports = new Novella();
+
+// Start application
+var novella = new Novella();
+novella.start();

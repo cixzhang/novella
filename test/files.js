@@ -70,7 +70,7 @@ describe('a files data manager', function () {
             fs.writeFileSync(fileData.path, JSON.stringify(fileData.data));
           },
           onUpdate = function () {
-            expect(storeData).to.include.keys(fileData.name);
+            expect(storeData[fileData.name]).to.equal(fileData.data);
             done();
           };
 
