@@ -1,7 +1,7 @@
 dist/cms:
 	mkdir -p dist/cms
-	cp cms/index.html dist/cms
-	npm run cms.js
+	cp lib/cms/index.html dist/cms
+	npm run cms/app.js
 
 clean:
 	rm -r dist
