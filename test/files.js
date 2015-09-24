@@ -127,7 +127,34 @@ describe('a files data manager', function () {
     before(cleanup);
     after(cleanup);
 
-    it('creates files when given a create patch');
+    it('creates folders when given a create patch without data', function (done) {
+      var patch = {
+            method: 'create',
+            path: 'test'
+          },
+          onUpdate = function () {
+            //expect(storeData).to.include.keys('test');
+            done();
+          };
+      dispatch.watch(store, 'update', onUpdate);
+      store.patch(patch);
+    });
+
+    it('creates files when given a create patch with data', function (done) {
+      var patch = {
+            method: 'create',
+            path: 'test/1',
+            data: {a: 1, b: 2}
+          },
+          onUpdate = function () {
+            expect(storeData['test']).to.include.keys('1');
+            //expect(storeData['test']['1']).to.equal(patch.data);
+            done();
+          };
+
+      dispatch.watch(store, 'update', onUpdate);
+      store.patch(patch);
+    });
     it('updates files when given an update patch');
     it('deletes files when given a delete patch');
   });
