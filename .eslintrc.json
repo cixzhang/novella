@@ -1,0 +1,23 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "browser": true,
+    "node": true,
+    "commonjs": true,
+    "mocha": true,
+    "es6": true
+  },
+  "rules": {
+    "semi": 1,
+    "no-extra-bind": 2,
+    "no-trailing-spaces": 1,
+    "comma-dangle": [1, "always-multiline"],
+    "prefer-arrow-callback": 2
+  },
+  "parserOptions": {
+    "sourceType": "module"
+  },
+  "plugins": [
+    "vue"
+  ]
+}
