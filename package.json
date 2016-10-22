@@ -5,7 +5,8 @@
   "repository": "git@github.com:cixzhang/Novella.git",
   "dependencies": {
     "colors": "^1.1.2",
-    "optionator": "^0.8.2"
+    "optionator": "^0.8.2",
+    "vue": "^2.0.3"
   },
   "devDependencies": {
     "chai": "^2.2.0",
@@ -18,6 +19,6 @@
   },
   "main": "lib/novella.js",
   "scripts": {
-    "build": "rollup -c rollup.config.js"
+    "build-example": "node ./lib/novella.js example/pages -t Ducks"
   }
 }

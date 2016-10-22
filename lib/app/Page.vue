@@ -1,9 +1,25 @@
 <template>
-  <img v-if="isImage()" src="{{ `${location}/${filename}` }}" />
-  <span>{{ mtime.toLocaleString() }}</span>
+  <div class="page">
+    <div>
+      <img v-if="isImage()" :src="getSource()" />
+    </div>
+    <span>{{ new Date(page.mtime).toLocaleString() }}</span>
+  </div>
 </template>
 
 <style scoped>
+  .page {
+    flex: 11;
+    padding: 1em;
+    text-align: center;
+    background: white;
+    box-shadow: 1px 3px 10px 1px rgba(0,0,0,0.05);
+  }
+
+  .page span {
+    font-size: 0.8em;
+    opacity: 0.5;
+  }
 </style>
 
 <script>
@@ -13,7 +29,10 @@
   export default {
     props: { page },
     methods: {
-      isImage() { return isImage(this.filename); },
+      isImage() { return isImage(this.page.filename); },
+      getSource() {
+        return `${this.page.location}/${this.page.filename}`;
+      },
     },
   };
 </script>
