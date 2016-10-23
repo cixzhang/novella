@@ -7,20 +7,9 @@
   </div>
 </template>
 
-<style scoped>
-  .page {
-    text-align: center;
-  }
-
-  .page span {
-    font-size: 0.8em;
-    opacity: 0.5;
-  }
-</style>
-
 <script>
-  import { isImage } from './_detectFileType';
-  import { page } from './_propTypes.js';
+  import { isImage } from './files';
+  import { page } from './props';
 
   export default {
     props: { page },
@@ -32,3 +21,14 @@
     },
   };
 </script>
+
+<style scoped>
+  .page {
+    text-align: center;
+  }
+
+  .page span {
+    font-size: 0.8em;
+    opacity: 0.5;
+  }
+</style>

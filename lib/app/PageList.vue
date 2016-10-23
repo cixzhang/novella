@@ -9,6 +9,39 @@
   </ul>
 </template>
 
+<script>
+  import { isImage } from './files';
+  import { store } from './props';
+
+  export default {
+    props: { store },
+    computed: {
+      length() { return this.store.pages.length; },
+    },
+    methods: {
+      isImage(n) {
+        var page = this.store.pages[n-1];
+        return isImage(page.filename);
+      },
+      isSelected(n) {
+        return n === this.store.pagenum;
+      },
+      handleClick(e) {
+        this.clickPage(e.currentTarget.dataset.index);
+      },
+      getSource(n) {
+        var page = this.store.pages[n-1];
+        return `${page.location}/${page.filename}`;
+      },
+      getRoute(pageNum) {
+        var route = this.store.pageroute;
+        if (!route) return null;
+        return `${route}/${pageNum}`;
+      },
+    },
+  };
+</script>
+
 <style scoped>
 .page-list {
   width: 100%;
@@ -49,39 +82,3 @@
   text-align: center;
 }
 </style>
-
-<script>
-  import { isImage } from './_detectFileType';
-  import { pages } from './_propTypes.js';
-
-  export default {
-    props: {
-      pages,
-      route: String,
-      selectedPage: Number,
-    },
-    computed: {
-      length() { return this.pages.length; },
-    },
-    methods: {
-      isImage(n) {
-        var page = this.pages[n-1];
-        return isImage(page.filename);
-      },
-      isSelected(n) {
-        return n === this.selectedPage;
-      },
-      handleClick(e) {
-        this.clickPage(e.currentTarget.dataset.index);
-      },
-      getSource(n) {
-        var page = this.pages[n-1];
-        return `${page.location}/${page.filename}`;
-      },
-      getRoute(pageNum) {
-        if (!this.route) return null;
-        return `${this.route}/${pageNum}`;
-      },
-    },
-  };
-</script>

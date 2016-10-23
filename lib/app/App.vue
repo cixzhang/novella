@@ -4,24 +4,46 @@
       class="sidebar"
       :data-animation="animateSidebar"
       v-on:animationend="onAnimationEnd()">
-      <h1>{{ title }}</h1>
-      <page-list
-        :pages="pages"
-        :route="pageRoute"
-        :selected-page="selectedPage"
-      >
-      </page-list>
+      <h1>{{ store.title }}</h1>
+      <page-list :store="store"></page-list>
     </div>
 
     <div class="content">
       <button class="sidebar-toggle" v-on:click="toggleSidebar()">
         {{ hideSidebar ? 'show menu' : 'hide menu' }}
       </button>
-      <page :page="pages[selectedPage - 1]">
-      </page>
+      <page :page="store.pages[store.pagenum - 1]"></page>
     </div>
   </div>
 </template>
+
+<script>
+  import Page from './Page.vue';
+  import PageList from './PageList.vue';
+  import { store } from './props';
+
+  export default {
+    props: { store },
+    data: () => ({
+      animateSidebar: null,
+      hideSidebar: false,
+    }),
+    components: {
+      Page,
+      PageList,
+    },
+    methods: {
+      toggleSidebar() {
+        this.hideSidebar = !this.hideSidebar;
+        if (this.hideSidebar) this.animateSidebar = 'close';
+        else this.animateSidebar = 'open';
+      },
+      onAnimationEnd() {
+        this.animateSidebar = null;
+      },
+    },
+  };
+</script>
 
 <style scoped>
 * {
@@ -128,39 +150,3 @@
   padding: 0;
 }
 </style>
-
-<script>
-  import Page from './Page.vue';
-  import PageList from './PageList.vue';
-  import { pages } from './_propTypes.js';
-
-  export default {
-    props: {
-      title: String,
-      pages,
-      pageRoute: String,
-      selectedPage: {
-        type: Number,
-        default: 1,
-      },
-    },
-    data: () => ({
-      animateSidebar: null,
-      hideSidebar: false,
-    }),
-    components: {
-      Page,
-      PageList,
-    },
-    methods: {
-      toggleSidebar() {
-        this.hideSidebar = !this.hideSidebar;
-        if (this.hideSidebar) this.animateSidebar = 'close';
-        else this.animateSidebar = 'open';
-      },
-      onAnimationEnd() {
-        this.animateSidebar = null;
-      },
-    },
-  };
-</script>
