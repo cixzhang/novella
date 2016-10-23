@@ -24,7 +24,6 @@
         return isImage(page.filename);
       },
       isSelected(n) {
-        console.log(n, this.store.pagenum);
         return n === this.store.pagenum;
       },
       handleClick(e) {
@@ -34,10 +33,10 @@
         var page = this.store.pages[n-1];
         return `${page.location}/${page.filename}`;
       },
-      getRoute(pageNum) {
+      getRoute(n) {
         var route = this.store.pageroute;
         if (!route) return null;
-        return `${route}/${pageNum}`;
+        return `${route}/${n}`;
       },
     },
   };
