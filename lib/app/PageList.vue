@@ -1,6 +1,9 @@
 <template>
   <ul class="page-list">
-    <li v-for="n in Math.min(length, 10)" :data-selected="isSelected(n)">
+    <li
+      v-for="n in Math.min(length, 10)"
+      :data-selected="isSelected(n)"
+      :key="getSource(n)">
       <a :href="getRoute(n)">
         <img v-if="isImage(n)" :src="getSource(n)" />
         <span>{{ n }}</span>
@@ -38,6 +41,9 @@
         if (!route) return null;
         return `${route}/${n}`;
       },
+      getListItem(n) {
+        return this.$el.querySelectorAll('li')[n-1];
+      },
     },
   };
 </script>
@@ -73,9 +79,6 @@
 }
 
 .page-list li span {
-  position: absolute;
-  bottom: -1.5em;
-  left: 0;
   font-size: 0.8em;
   opacity: 0.5;
   width: 100%;

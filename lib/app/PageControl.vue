@@ -46,17 +46,6 @@
   margin: 1em;
 }
 
-.prev, .next {
-  text-decoration: none;
-}
-
-.prev[disabled],
-.next[disabled] {
-  pointer-events: none;
-  opacity: 0.2;
-  color: black;
-}
-
 .prev {
   float: left;
 }

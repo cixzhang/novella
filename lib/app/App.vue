@@ -1,12 +1,13 @@
 <template>
-  <div class="app" :data-close-sidebar="hideSidebar && !animateSidebar">
-    <div
-      class="sidebar"
-      :data-animation="animateSidebar"
-      v-on:animationend="onAnimationEnd()">
-      <h1>{{ store.title }}</h1>
-      <page-list :store="store"></page-list>
-    </div>
+  <div class="app">
+    <transition name="slide">
+      <div
+        class="sidebar"
+        v-if="!hideSidebar">
+        <h1>{{ store.title }}</h1>
+        <page-list :store="store" ref="pageList"></page-list>
+      </div>
+    </transition>
 
     <div class="content">
       <button class="sidebar-toggle" v-on:click="toggleSidebar()">
@@ -24,6 +25,7 @@
   import PageList from './PageList.vue';
   import PageControl from './PageControl.vue';
   import { store } from './props';
+  import { scrollToElement } from './helpers';
 
   export default {
     props: { store },
@@ -46,6 +48,16 @@
       onAnimationEnd() {
         this.animateSidebar = null;
       },
+      scrollToSelected() {
+        var selected = this.$refs.pageList.getListItem(this.store.pagenum);
+        scrollToElement(this.$el, selected);
+      },
+    },
+    mounted: function mounted() {
+      this.scrollToSelected();
+    },
+    updated: function updated() {
+      this.scrollToSelected();
     },
   };
 </script>
@@ -53,6 +65,16 @@
 <style scoped>
 * {
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+a[disabled] {
+  pointer-events: none;
+  opacity: 0.2;
+  color: black;
 }
 
 .app {
@@ -110,13 +132,13 @@
   }
 }
 
-[data-animation="open"] {
+.slide-enter-active {
   animation-direction: normal;
   animation-duration: 1s;
   animation-name: open;
 }
 
-[data-animation="close"] {
+.slide-leave-active {
   animation-direction: normal;
   animation-duration: 0.5s;
   animation-name: close;
@@ -151,10 +173,5 @@
   font-weight: normal;
   margin: 0;
   margin-bottom: 1rem;
-}
-
-.app[data-close-sidebar] .sidebar {
-  max-width: 0;
-  padding: 0;
 }
 </style>
