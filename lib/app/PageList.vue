@@ -24,6 +24,7 @@
         return isImage(page.filename);
       },
       isSelected(n) {
+        console.log(n, this.store.pagenum);
         return n === this.store.pagenum;
       },
       handleClick(e) {
