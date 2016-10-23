@@ -1,10 +1,10 @@
 <template>
   <div class="page-control">
     <a class="prev" :href="getRoute(store.pagenum - 1)" :disabled="!canPrev()">
-      Prev
+      prev ([ q)
     </a>
     <a class="next" :href="getRoute(store.pagenum + 1)" :disabled="!canNext()">
-      Next
+      (] w) next
     </a>
   </div>
 </template>
