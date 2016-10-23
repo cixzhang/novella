@@ -49,8 +49,10 @@
         this.animateSidebar = null;
       },
       scrollToSelected() {
-        if (this.hideSidebar) return;
-        var selected = this.$refs.pageList.getListItem(this.store.pagenum);
+        var pageList = this.$refs.pageList;
+        if (!pageList) return;
+
+        var selected = pageList.getListItem(this.store.pagenum);
         scrollToElement(this.$el, selected);
       },
     },
