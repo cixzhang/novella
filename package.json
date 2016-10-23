@@ -5,6 +5,8 @@
   "repository": "git@github.com:cixzhang/Novella.git",
   "dependencies": {
     "colors": "^1.1.2",
+    "lwip": "0.0.9",
+    "natural-compare": "^1.4.0",
     "optionator": "^0.8.2",
     "vue": "^2.0.3"
   },
