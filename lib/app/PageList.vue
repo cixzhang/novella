@@ -6,7 +6,7 @@
       :key="getSource(n)">
       <a :href="getRoute(n)">
         <img v-if="isImage(n)" :src="getSource(n)" />
-        <span>{{ n }}</span>
+        <div class="pagenum">{{ n }}</div>
       </a>
     </li>
   </ul>
@@ -60,11 +60,8 @@
   width: 100%;
   height: auto;
   position: relative;
-  margin-bottom: 2em;
-}
-
-.page-list li:last-child {
-  margin-bottom: 1em;
+  padding: 1em 0;
+  text-align: center;
 }
 
 .page-list li[data-selected] img {
@@ -74,16 +71,15 @@
 
 .page-list li img {
   max-width: 100%;
-  max-height: 100%;
+  max-height: 200px;
   width: auto;
   height: auto;
   box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
 }
 
-.page-list li span {
+.page-list .pagenum {
   font-size: 0.8em;
   opacity: 0.5;
   width: 100%;
-  text-align: center;
 }
 </style>
