@@ -3,36 +3,35 @@
     <li v-for="n in Math.min(length, 10)">
       <a :href="getRoute(n)" :data-index="n">
         <img v-if="isImage(n)" :src="getSource(n)" />
+        <span>{{ n }}</span>
       </a>
-      <span>{{ n }}</span>
     </li>
   </ul>
 </template>
 
 <style scoped>
 .page-list {
-  flex: 2;
-  margin: 0;
-  padding: 1em;
-  text-align: center;
-  list-style: none;
-  max-height: 100%;
-  overflow: auto;
-}
-.page-list li,
-.page-list li img {
   width: 100%;
-  height: auto;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .page-list li {
+  width: 100%;
+  height: auto;
   position: relative;
   margin-bottom: 2em;
-  box-shadow: 1px 3px 10px 1px rgba(0,0,0,0.05);
 }
 
 .page-list li:last-child {
   margin-bottom: 1em;
+}
+
+.page-list li img {
+  width: 100%;
+  height: auto;
+  box-shadow: 1px 3px 10px 1px rgba(0,0,0,0.05);
 }
 
 .page-list li span {

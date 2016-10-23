@@ -14,6 +14,8 @@
     text-align: center;
     background: white;
     box-shadow: 1px 3px 10px 1px rgba(0,0,0,0.05);
+    overflow: auto;
+    max-height: 100%;
   }
 
   .page span {
