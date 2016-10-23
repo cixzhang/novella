@@ -5,6 +5,7 @@
       <page-list
         :pages="pages"
         :route="pageRoute"
+        :selected-page="selectedPage"
       >
       </page-list>
     </div>

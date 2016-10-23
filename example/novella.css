@@ -54,10 +54,15 @@
   margin-bottom: 1em;
 }
 
+.page-list li[data-selected] img {
+  border: 1px solid rgba(71, 169, 79, 0.4);
+  box-shadow: 2px 2px 10px 1px rgba(71, 169, 79, 0.2);
+}
+
 .page-list li img {
   width: 100%;
   height: auto;
-  box-shadow: 1px 3px 10px 1px rgba(0,0,0,0.05);
+  box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
 }
 
 .page-list li span {
