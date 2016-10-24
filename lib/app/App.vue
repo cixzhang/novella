@@ -1,66 +1,22 @@
 <template>
   <div class="app">
     <transition name="slide">
-      <div
-        class="sidebar"
-        v-if="!hideSidebar">
-        <h1>{{ store.title }}</h1>
-        <page-list :store="store" ref="pageList"></page-list>
-      </div>
+      <sidebar v-if="store.showsidebar" :store="store"></sidebar>
     </transition>
-
-    <div class="content">
-      <button class="sidebar-toggle" v-on:click="toggleSidebar()">
-        {{ hideSidebar ? 'show menu' : 'hide menu' }}
-      </button>
-      <page :page="getPage(store.pagenum)"></page>
-
-      <page-control :store="store"></page-control>
-    </div>
+    <gallery :store="store"></gallery>
   </div>
 </template>
 
 <script>
-  import Page from './Page.vue';
-  import PageList from './PageList.vue';
-  import PageControl from './PageControl.vue';
+  import Sidebar from './Sidebar.vue';
+  import Gallery from './Gallery.vue';
   import { store } from './props';
-  import { scrollToElement } from './helpers';
 
   export default {
     props: { store },
-    data: () => ({
-      animateSidebar: null,
-      hideSidebar: false,
-    }),
     components: {
-      Page,
-      PageList,
-      PageControl,
-    },
-    methods: {
-      getPage(n) { return this.store.pages[n - 1]; },
-      toggleSidebar() {
-        this.hideSidebar = !this.hideSidebar;
-        if (this.hideSidebar) this.animateSidebar = 'close';
-        else this.animateSidebar = 'open';
-      },
-      onAnimationEnd() {
-        this.animateSidebar = null;
-      },
-      scrollToSelected() {
-        var pageList = this.$refs.pageList;
-        if (!pageList) return;
-
-        var selected = pageList.getListItem(this.store.pagenum);
-        scrollToElement(this.$el, selected);
-      },
-    },
-    mounted: function mounted() {
-      this.scrollToSelected();
-    },
-    updated: function updated() {
-      this.scrollToSelected();
+      Gallery,
+      Sidebar,
     },
   };
 </script>
@@ -147,34 +103,11 @@ a[disabled] {
   animation-name: close;
 }
 
-.content {
+.gallery {
   flex: 11;
-  padding: 1em;
-  background: white;
-  box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
-  overflow: auto;
-  width: 100%;
-  max-height: 100%;
-  min-width: 80%;
-  transition: all 0.2s ease;
-  position: relative;
 }
 
 .sidebar {
   flex: 2;
-  padding: 1em;
-  text-align: center;
-  max-height: 100%;
-  overflow: auto;
-  overflow-x: hidden;
-  opacity: 1;
-  position: relative;
-}
-
-.sidebar h1 {
-  font-size: 1.2em;
-  font-weight: normal;
-  margin: 0;
-  margin-bottom: 1rem;
 }
 </style>

@@ -15,6 +15,7 @@
 <script>
   import { isImage } from './files';
   import { store } from './props';
+  import { scrollToElement } from './helpers';
 
   export default {
     props: { store },
@@ -41,9 +42,18 @@
         if (!route) return null;
         return `${route}/${n}`;
       },
-      getListItem(n) {
-        return this.$el.querySelectorAll('li')[n-1];
+      scrollToSelected() {
+        var n = this.store.pagenum;
+        var ref = this.$parent ? this.$parent.$el : this.$el;
+        var selected = this.$el.querySelectorAll('li')[n-1];
+        scrollToElement(ref, selected);
       },
+    },
+    mounted: function mounted() {
+      this.scrollToSelected();
+    },
+    updated: function updated() {
+      this.scrollToSelected();
     },
   };
 </script>
