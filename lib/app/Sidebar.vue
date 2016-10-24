@@ -60,12 +60,12 @@
       },
       scrollToPage(n) {
         var index = n-1;
+        var scrollTop = this.$el.scrollTop;
         var pagelist = this.$refs.pagelist;
         var pagelistTop = pagelist.$el.getBoundingClientRect().top;
         var pagetop = this.positions[index];
         var pagebot = this.positions[index + 1];
-        var delta = this.$el.scrollTop + pagelistTop;
-        scrollToRange(this.$el, [pagetop + delta, pagebot + delta]);
+        scrollToRange(this.$el, [scrollTop + pagetop + pagelistTop, scrollTop + pagebot + pagelistTop]);
       },
       updateVisiblePages() {
         var pagelist = this.$refs.pagelist;
@@ -103,6 +103,12 @@
     },
     beforeDestroy: function beforeDestroy() {
       window.removeEventListener('resize', this.boundUpdateVisiblePages);
+    },
+    watch: {
+      store: {
+        handler: function store() { this.scrollToPage(this.store.pagenum); },
+        deep: true,
+      },
     },
   };
 </script>
