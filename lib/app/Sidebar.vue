@@ -2,7 +2,7 @@
   <div
     class="sidebar"
     v-on:scroll="updateVisiblePages()"
-    :style="{ width: width + 'px', padding: pad + 'px' }">
+    :style="{ width: width + 'px', padding: padding + 'px' }">
     <h1>{{ store.title }}</h1>
     <page-list
       :store="store"
@@ -37,7 +37,7 @@
     data: () => ({
       width: 200,
       maxContentHeight: 200,
-      pad: 16,
+      padding: 16,
       visiblePages: [],
     }),
     components: {
@@ -47,7 +47,7 @@
       computeHeight(n) {
         var WIDTH = this.width;
         var MAX_CONTENT_HEIGHT = this.maxContentHeight;
-        var PAD = this.pad;
+        var PAD = this.padding;
 
         var imageHeight;
         var page = this.store.pages[n-1];
