@@ -52,22 +52,16 @@ a[disabled] {
   0% {
     transform: translateX(-100%);
     opacity: 0;
-    flex: 0;
-    padding: 0;
   }
 
   25% {
     transform: translateX(-100%);
     opacity: 0;
-    flex: 2;
-    padding: 1em;
   }
   
   100% {
     transform: translateX(0);
     opacity: 1;
-    flex: 2;
-    padding: 1em;
   }
 }
 
@@ -75,22 +69,16 @@ a[disabled] {
   0% {
     transform: translateX(0);
     opacity: 1;
-    flex: 2;
-    padding: 1em;
   }
 
   25% {
     transform: translateX(-100%);
     opacity: 0;
-    flex: 2;
-    padding: 1em;
   }
   
   100% {
     transform: translateX(-100%);
     opacity: 0;
-    flex: 0;
-    padding: 0;
   }
 }
 
@@ -107,10 +95,10 @@ a[disabled] {
 }
 
 .gallery {
-  flex: 11;
+  flex: 1;
 }
 
 .sidebar {
-  flex: 2;
+  flex: 0 0 200px;
 }
 </style>

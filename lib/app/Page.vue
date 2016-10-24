@@ -28,7 +28,7 @@
   }
 
   .page span {
-    font-size: 0.8em;
+    font-size: 12px;
     opacity: 0.5;
   }
 </style>

@@ -34,11 +34,10 @@
 
 <style scoped>
 .gallery {
-  padding: 1em;
+  padding: 16px;
   background: white;
   box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
   overflow: auto;
-  width: 100%;
   max-height: 100%;
   min-width: 80%;
   transition: all 0.2s ease;

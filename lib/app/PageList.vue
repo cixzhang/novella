@@ -1,9 +1,10 @@
 <template>
-  <ul class="page-list">
+  <ul class="page-list" :style="{ height: getTotalHeight() + 'px' }">
     <li
       v-for="n in Math.min(length, 10)"
       :data-highlight="isSelected(n)"
-      :key="getSource(n)">
+      :key="getSource(n)"
+      :style="{ top: positions[n] + 'px' }">
       <a :href="getRoute(n)">
         <page-content :src="getSource(n)"></page-content>
         <div class="pagenum">{{ n }}</div>
@@ -20,6 +21,16 @@
     props: { store },
     computed: {
       length() { return this.store.pages.length; },
+      positions() {
+        var total = 0;
+        var positions = this.store.pages.map((page, n) => {
+          var top = total;
+          total += this.computeHeight(n+1);
+          return top;
+        });
+        positions.unshift(total);
+        return positions;
+      },
     },
     components: { PageContent },
     methods: {
@@ -38,6 +49,23 @@
         if (!route) return null;
         return `${route}/${n}`;
       },
+      getTotalHeight() {
+        return this.positions[0];
+      },
+      computeHeight(n) {
+        var WIDTH = 200;
+        var MAX_IMAGE_HEIGHT = 200;
+        var PAD = 16;
+
+        var imageHeight;
+        var page = this.store.pages[n-1];
+        var ratio = page.height / page.width;
+
+        if (ratio > 1) imageHeight = MAX_IMAGE_HEIGHT;
+        else imageHeight = ratio * (WIDTH - PAD * 2);
+
+        return imageHeight + PAD * 3;
+      },
     },
   };
 </script>
@@ -48,18 +76,20 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  position: relative;
 }
 
 .page-list li {
   width: 100%;
   height: auto;
-  position: relative;
-  padding: 1em 0;
+  padding: 16px 0;
   text-align: center;
+  position: absolute;
 }
 
 .page-list .pagenum {
-  font-size: 0.8em;
+  font-size: 12px;
+  line-height: 16px;
   opacity: 0.5;
   width: 100%;
 }
