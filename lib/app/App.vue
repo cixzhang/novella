@@ -99,6 +99,6 @@ a[disabled] {
 }
 
 .sidebar {
-  flex: 0 0 200px;
+  flex: 0 0 auto;
 }
 </style>

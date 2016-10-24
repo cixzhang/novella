@@ -73,11 +73,10 @@ a[disabled] {
 }
 
 .sidebar {
-  flex: 0 0 200px;
+  flex: 0 0 auto;
 }
 
 .sidebar {
-  padding: 16px;
   text-align: center;
   max-height: 100%;
   overflow: auto;
@@ -118,7 +117,6 @@ a[disabled] {
 
 .page-list .page-content {
   max-width: 100%;
-  max-height: 200px;
   box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
 }
 .page-list li[data-highlight] .page-content {

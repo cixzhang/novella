@@ -1,12 +1,15 @@
 <template>
-  <ul class="page-list" :style="{ height: getTotalHeight() + 'px' }">
+  <ul class="page-list">
     <li
       v-for="n in visiblePages"
       :data-highlight="isSelected(n)"
       :key="getSource(n)"
       :style="{ top: getPosition(n) + 'px' }">
       <a :href="getRoute(n)">
-        <page-content :src="getSource(n)"></page-content>
+        <page-content
+          :src="getSource(n)" 
+          :style="contentStyle">
+        </page-content>
         <div class="pagenum">{{ n }}</div>
       </a>
     </li>
@@ -20,20 +23,12 @@
   export default {
     props: {
       store,
+      positions: Array,
       visiblePages: Array,
+      contentStyle: Object,
     },
     computed: {
       length() { return this.store.pages.length; },
-      positions() {
-        var total = 0;
-        var positions = this.store.pages.map((page, n) => {
-          var top = total;
-          total += this.computeHeight(n+1);
-          return top;
-        });
-        positions.push(total);
-        return positions;
-      },
     },
     components: { PageContent },
     methods: {
@@ -54,23 +49,6 @@
       },
       getPosition(n) {
         return this.positions[n-1];
-      },
-      getTotalHeight() {
-        return this.positions[this.positions.length - 1];
-      },
-      computeHeight(n) {
-        var WIDTH = 200;
-        var MAX_IMAGE_HEIGHT = 200;
-        var PAD = 16;
-
-        var imageHeight;
-        var page = this.store.pages[n-1];
-        var ratio = page.height / page.width;
-
-        if (ratio > 1) imageHeight = MAX_IMAGE_HEIGHT;
-        else imageHeight = ratio * (WIDTH - PAD * 2);
-
-        return imageHeight + PAD * 3;
       },
     },
   };
@@ -102,7 +80,6 @@
 
 .page-list .page-content {
   max-width: 100%;
-  max-height: 200px;
   box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
 }
 .page-list li[data-highlight] .page-content {
