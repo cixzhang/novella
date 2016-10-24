@@ -1,32 +1,58 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar" v-on:scroll="updateVisiblePages()">
     <h1>{{ store.title }}</h1>
-    <page-list :store="store" ref="pageList"></page-list>
+    <page-list
+      :store="store"
+      :visible-pages="visiblePages"
+      ref="pagelist">
+    </page-list>
   </div>
 </template>
 
 <script>
   import PageList from './PageList.vue';
   import { store } from './props';
-  import { scrollToElement } from './helpers';
+  import { scrollToRange } from './helpers';
 
   export default {
     props: { store },
+    data: () => ({
+      visiblePages: [],
+    }),
     components: {
       PageList,
     },
     methods: {
       scrollToPage(n) {
-        var list = this.$el.querySelectorAll('li');
-        if (!list[n-1]) return;
-        scrollToElement(this.$el, list[n-1]);
+        var pagelist = this.$refs.pagelist;
+        var pagelistTop = pagelist.$el.getBoundingClientRect().top;
+        var pagetop = pagelist.positions[n-1];
+        var pagebot = pagelist.positions[n];
+        var delta = this.$el.scrollTop + pagelistTop;
+        scrollToRange(this.$el, [pagetop + delta, pagebot + delta]);
+      },
+      updateVisiblePages() {
+        var pagelist = this.$refs.pagelist;
+        var pagelistTop = pagelist.$el.getBoundingClientRect().top;
+        var height = this.$el.getBoundingClientRect().height;
+
+        var top = Math.max(-pagelistTop, 0);
+        var bottom = Math.min(height - pagelistTop, pagelist.getTotalHeight());
+
+        var visiblePages = [];
+        this.store.pages.forEach((page, n) => {
+          var position = pagelist.positions[n];
+          var next = pagelist.positions[n+1];
+          if (next > top && position < bottom) {
+            visiblePages.push(n+1);
+          }
+        });
+        this.visiblePages = visiblePages;
       },
     },
     mounted: function mounted() {
       this.scrollToPage(this.store.pagenum);
-    },
-    updated: function updated() {
-      this.scrollToPage(this.store.pagenum);
+      this.updateVisiblePages();
     },
   };
 /*
@@ -39,20 +65,6 @@ Lazy rendering notes:
 
 - sidebar: compute which indices should be renderd
 - sidebar->pagelist: pass indices to render
-- pagelist: render the list, provide a height equal to total height
-  can estimate? max-height for image is 200px, get average aspect ratio
-  1:1 -> width of pagelist (200 - pad * 2)
-  1:2 -> 200px
-  1:0.5 -> width * 0.5
-
-
-  imageHeight = 200 (when height > width, else...)
-  imageHeight = (height / width) * (pagelistWidth)
-
-  itemHeight = imageHeight + 3 * pad
-  totalHeight = sum(itemHeight);
-
-- pagelist: render the provided indices, position them where expected.
 
 */
 </script>

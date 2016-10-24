@@ -1,10 +1,10 @@
 <template>
   <ul class="page-list" :style="{ height: getTotalHeight() + 'px' }">
     <li
-      v-for="n in Math.min(length, 10)"
+      v-for="n in visiblePages"
       :data-highlight="isSelected(n)"
       :key="getSource(n)"
-      :style="{ top: positions[n] + 'px' }">
+      :style="{ top: getPosition(n) + 'px' }">
       <a :href="getRoute(n)">
         <page-content :src="getSource(n)"></page-content>
         <div class="pagenum">{{ n }}</div>
@@ -18,7 +18,10 @@
   import { store } from './props';
 
   export default {
-    props: { store },
+    props: {
+      store,
+      visiblePages: Array,
+    },
     computed: {
       length() { return this.store.pages.length; },
       positions() {
@@ -28,7 +31,7 @@
           total += this.computeHeight(n+1);
           return top;
         });
-        positions.unshift(total);
+        positions.push(total);
         return positions;
       },
     },
@@ -49,8 +52,11 @@
         if (!route) return null;
         return `${route}/${n}`;
       },
+      getPosition(n) {
+        return this.positions[n-1];
+      },
       getTotalHeight() {
-        return this.positions[0];
+        return this.positions[this.positions.length - 1];
       },
       computeHeight(n) {
         var WIDTH = 200;
