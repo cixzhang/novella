@@ -55,18 +55,6 @@
       this.updateVisiblePages();
     },
   };
-/*
-Lazy rendering notes:
-
-- sidebar: get current scroll position
-  adjust for top position of pagelist:
-
-  this.$el.getBoundingClientRect().top - this.$refs.pagelist.$el.getBoundingClientRect().top;
-
-- sidebar: compute which indices should be renderd
-- sidebar->pagelist: pass indices to render
-
-*/
 </script>
 
 <style scoped>
