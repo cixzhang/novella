@@ -1,20 +1,20 @@
 <template>
   <div class="page">
     <div>
-      <img v-if="isImage()" :src="getSource()" />
+      <page-content :src="getSource()"></page-content>
     </div>
     <span>{{ new Date(page.mtime).toLocaleString() }}</span>
   </div>
 </template>
 
 <script>
-  import { isImage } from './files';
+  import PageContent from './PageContent.vue';
   import { page } from './props';
 
   export default {
     props: { page },
+    components: { PageContent },
     methods: {
-      isImage() { return isImage(this.page.filename); },
       getSource() {
         return `${this.page.location}/${this.page.filename}`;
       },

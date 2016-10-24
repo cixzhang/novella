@@ -1,7 +1,10 @@
 <template>
   <div class="app">
-    <transition name="slide">
-      <sidebar v-if="store.showsidebar" :store="store"></sidebar>
+    <transition
+      name="slide"
+      v-on:after-enter="$refs.sidebar.scrollToPage(store.pagenum)"
+    >
+      <sidebar v-if="store.showsidebar" :store="store" ref="sidebar"></sidebar>
     </transition>
     <gallery :store="store"></gallery>
   </div>
