@@ -1,10 +1,13 @@
 <template>
   <div class="gallery">
     <button class="sidebar-toggle" v-on:click="toggleSidebar()">
-      {{ store.showsidebar ? 'hide menu' : 'show menu' }}
+      {{ store.showsidebar ? '« hide pages' : '» show pages' }}
     </button>
+    <header>
+      <span>{{ store.title }}</span>
+      <span>{{ getPage(store.pagenum).name }}</span>
+    </header>
     <page :page="getPage(store.pagenum)"></page>
-
     <page-control :store="store"></page-control>
   </div>
 </template>
@@ -42,5 +45,15 @@
   min-width: 80%;
   transition: all 0.2s ease;
   position: relative;
+}
+
+.gallery header {
+  font-size: 19px;
+  line-height: 2;
+}
+
+.gallery header span:not(:last-child)::after {
+  content: ' ›';
+  opacity: 0.5;
 }
 </style>

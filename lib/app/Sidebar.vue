@@ -3,7 +3,7 @@
     class="sidebar"
     v-on:scroll="updateVisiblePages()"
     :style="{ width: width + 'px', padding: padding + 'px' }">
-    <h1>{{ store.title }}</h1>
+    <slot></slot>
     <page-list
       :store="store"
       :visible-pages="visiblePages"
@@ -121,12 +121,5 @@
   overflow-x: hidden;
   opacity: 1;
   position: relative;
-}
-
-.sidebar h1 {
-  font-size: 19px;
-  font-weight: normal;
-  margin: 0;
-  margin-bottom: 16px;
 }
 </style>

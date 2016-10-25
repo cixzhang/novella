@@ -85,13 +85,6 @@ a[disabled] {
   position: relative;
 }
 
-.sidebar h1 {
-  font-size: 19px;
-  font-weight: normal;
-  margin: 0;
-  margin-bottom: 16px;
-}
-
 .page-list {
   width: 100%;
   list-style: none;
@@ -151,6 +144,16 @@ a[disabled] {
   min-width: 80%;
   transition: all 0.2s ease;
   position: relative;
+}
+
+.gallery header {
+  font-size: 19px;
+  line-height: 2;
+}
+
+.gallery header span:not(:last-child)::after {
+  content: ' ›';
+  opacity: 0.5;
 }
 
   .page {
