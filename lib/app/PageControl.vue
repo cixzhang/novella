@@ -41,9 +41,9 @@
   position: absolute;
   bottom: 0;
   top: auto;
-  left: 0;
-  right: 0;
-  margin: 1em;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
 }
 
 .prev {

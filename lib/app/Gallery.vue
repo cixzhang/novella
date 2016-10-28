@@ -7,7 +7,9 @@
       <span>{{ store.title }}</span>
       <span>{{ getPage(store.pagenum).name }}</span>
     </header>
-    <page :page="getPage(store.pagenum)"></page>
+    <article>
+      <page :page="getPage(store.pagenum)"></page>
+      </article>
     <page-control :store="store"></page-control>
   </div>
 </template>
@@ -37,23 +39,35 @@
 
 <style scoped>
 .gallery {
-  padding: 16px;
   background: white;
   box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
-  overflow: auto;
-  max-height: 100%;
+  min-height: 100%;
   min-width: 80%;
   transition: all 0.2s ease;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery .sidebar-toggle {
+  position: absolute;
+  top: 16px;
+  left: 16px;
 }
 
 .gallery header {
-  font-size: 19px;
+  position: absolute;
   line-height: 2;
+  top: 16px;
+  right: 16px;
 }
 
 .gallery header span:not(:last-child)::after {
   content: ' ›';
   opacity: 0.5;
+}
+
+.gallery article {
+  overflow: auto;
 }
 </style>

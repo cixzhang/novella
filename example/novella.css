@@ -136,24 +136,36 @@ a[disabled] {
   }
 
 .gallery {
-  padding: 16px;
   background: white;
   box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
-  overflow: auto;
-  max-height: 100%;
+  min-height: 100%;
   min-width: 80%;
   transition: all 0.2s ease;
   position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.gallery .sidebar-toggle {
+  position: absolute;
+  top: 16px;
+  left: 16px;
 }
 
 .gallery header {
-  font-size: 19px;
+  position: absolute;
   line-height: 2;
+  top: 16px;
+  right: 16px;
 }
 
 .gallery header span:not(:last-child)::after {
   content: ' ›';
   opacity: 0.5;
+}
+
+.gallery article {
+  overflow: auto;
 }
 
   .page {
@@ -169,9 +181,9 @@ a[disabled] {
   position: absolute;
   bottom: 0;
   top: auto;
-  left: 0;
-  right: 0;
-  margin: 1em;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
 }
 
 .prev {
