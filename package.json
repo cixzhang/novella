@@ -8,16 +8,16 @@
     "lwip": "0.0.9",
     "natural-compare": "^1.4.0",
     "optionator": "^0.8.2",
-    "vue": "^2.0.3"
+    "vue": "^2.0.3",
+    "rollup": "^0.36.3",
+    "rollup-plugin-json": "^2.0.2",
+    "rollup-plugin-vue": "^2.2.8"
   },
   "devDependencies": {
     "chai": "^2.2.0",
     "eslint": "^3.8.1",
     "eslint-plugin-vue": "^0.1.1",
-    "mocha": "^2.2.4",
-    "rollup": "^0.36.3",
-    "rollup-plugin-json": "^2.0.2",
-    "rollup-plugin-vue": "^2.2.8"
+    "mocha": "^2.2.4"
   },
   "main": "lib/novella.js",
   "bin": "lib/novella.js",
