@@ -20,6 +20,7 @@
     "rollup-plugin-vue": "^2.2.8"
   },
   "main": "lib/novella.js",
+  "bin": "lib/novella.js",
   "scripts": {
     "build-example": "node ./lib/novella.js example/pages -t Ducks"
   }
