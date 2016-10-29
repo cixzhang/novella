@@ -1,28 +1,23 @@
 <template>
   <div class="page-control">
     <a class="prev" :href="getRoute(store.pagenum - 1)" :disabled="!canPrev()">
-      prev ([ q)
+      <span>prev</span>
     </a>
     <a class="next" :href="getRoute(store.pagenum + 1)" :disabled="!canNext()">
-      (] w) next
+      <span>next</span>
     </a>
+    <Shortcuts :controls="store.controls"></Shortcuts>
   </div>
 </template>
 
 <script>
-  import Page from './Page.vue';
-  import PageList from './PageList.vue';
+  import Shortcuts from './Shortcuts.vue';
   import { store } from './props';
 
   export default {
     props: { store },
-    data: () => ({
-      animateSidebar: null,
-      hideSidebar: false,
-    }),
     components: {
-      Page,
-      PageList,
+      Shortcuts,
     },
     methods: {
       canPrev() { return this.store.pagenum > 1; },
@@ -46,11 +41,15 @@
   bottom: 16px;
 }
 
-.prev {
+.page-control .prev {
   float: left;
 }
 
-.next {
+.page-control .next {
   float: right;
+}
+
+.page-control .shortcuts {
+  clear: both;
 }
 </style>
