@@ -25,3 +25,11 @@ For more information:
 ```
 novella -h
 ```
+
+TODO
+----
+
+* markdown page support
+* thumbnail generation
+* theme detection
+* layout customization
