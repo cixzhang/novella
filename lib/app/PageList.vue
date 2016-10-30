@@ -3,12 +3,13 @@
     <li
       v-for="n in visiblePages"
       :data-highlight="isSelected(n)"
-      :key="getSource(n)"
+      :key="getKey(n)"
       :style="{ top: getPosition(n) + 'px' }">
       <a :href="getRoute(n)">
         <page-content
-          :src="getSource(n)" 
-          :style="contentStyle">
+          :page="getPage(n)" 
+          :style="contentStyle"
+          :thumbs="true">
         </page-content>
         <div class="pagenum">{{ n }}</div>
       </a>
@@ -38,9 +39,12 @@
       handleClick(e) {
         this.clickPage(e.currentTarget.dataset.index);
       },
-      getSource(n) {
-        var page = this.store.pages[n-1];
-        return `${page.location}/${page.filename}`;
+      getPage(n) {
+        return this.store.pages[n-1];
+      },
+      getKey(n) {
+        var page = this.getPage(n);
+        return page.filename;
       },
       getRoute(n) {
         var route = this.store.pageroute;

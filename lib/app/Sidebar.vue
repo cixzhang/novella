@@ -46,15 +46,14 @@
     methods: {
       computeHeight(n) {
         var WIDTH = this.width;
-        var MAX_CONTENT_HEIGHT = this.maxContentHeight;
         var PAD = this.padding;
+        var MAX_CONTENT_HEIGHT = this.maxContentHeight;
+        var CONTENT_WIDTH = WIDTH - PAD * 2;
 
-        var imageHeight;
         var page = this.store.pages[n-1];
-        var ratio = page.height / page.width;
+        var ratio = page.type === 'image' ? page.height / page.width : 1;
 
-        if (ratio > 1) imageHeight = MAX_CONTENT_HEIGHT;
-        else imageHeight = ratio * (WIDTH - PAD * 2);
+        var imageHeight = Math.min(ratio * CONTENT_WIDTH, MAX_CONTENT_HEIGHT);
 
         return imageHeight + PAD * 3;
       },

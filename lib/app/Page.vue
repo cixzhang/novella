@@ -1,7 +1,8 @@
 <template>
   <div class="page">
     <div>
-      <page-content :src="getSource()"></page-content>
+      <page-content :page="page" :thumbs="false">
+      </page-content>
     </div>
     <span>{{ new Date(page.mtime).toLocaleString() }}</span>
   </div>
@@ -14,11 +15,6 @@
   export default {
     props: { page },
     components: { PageContent },
-    methods: {
-      getSource() {
-        return `${this.page.location}/${this.page.filename}`;
-      },
-    },
   };
 </script>
 

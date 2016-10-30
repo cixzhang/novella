@@ -5,12 +5,13 @@
   "repository": "git@github.com:cixzhang/Novella.git",
   "dependencies": {
     "lwip": "0.0.9",
+    "markdown": "^0.5.0",
     "natural-compare": "^1.4.0",
     "optionator": "^0.8.2",
-    "vue": "^2.0.3",
     "rollup": "^0.36.3",
     "rollup-plugin-json": "^2.0.2",
-    "rollup-plugin-vue": "^2.2.8"
+    "rollup-plugin-vue": "^2.2.8",
+    "vue": "^2.0.3"
   },
   "devDependencies": {
     "chai": "^2.2.0",
