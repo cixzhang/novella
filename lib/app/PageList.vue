@@ -44,7 +44,7 @@
       },
       getKey(n) {
         var page = this.getPage(n);
-        return page.filename;
+        return page.index;
       },
       getRoute(n) {
         var route = this.store.pageroute;

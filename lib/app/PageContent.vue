@@ -24,8 +24,7 @@
         return this.page.contents;
       },
       getSource() {
-        var page = this.page;
-        return `${page.location}/${page.filename}`;
+        return this.page.src;
       },
       onLoad() { this.hidden = false; },
     },
