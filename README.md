@@ -26,6 +26,17 @@ For more information:
 novella -h
 ```
 
+Example
+-------
+
+You can run the example in this repo:
+
+```
+npm run build-example
+```
+
+This invokes novella on the pages in the example folder.
+
 TODO
 ----
 
