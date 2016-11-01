@@ -81,7 +81,6 @@
   padding: 0 16px 0 48px;
   top: 0;
   left: 0;
-  color: #666;
   background: white;
   opacity: 0.5;
 }
