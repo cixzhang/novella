@@ -83,11 +83,11 @@
 }
 
 .page-list .page-content {
-  max-width: 100%;
+  max-height: 100%;
   box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
 }
 .page-list li[data-highlight] .page-content {
-  border: 1px solid rgba(71, 169, 79, 0.4);
-  box-shadow: 2px 2px 10px 1px rgba(71, 169, 79, 0.2);
+  border: 1px solid rgba(65, 182, 196, 0.6);
+  box-shadow: 2px 2px 10px 1px rgba(65, 182, 196, 0.2);
 }
 </style>
