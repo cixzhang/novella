@@ -20,7 +20,7 @@
     methods: {
       isImage() { return this.page.type === 'image'; },
       getContents() {
-        if (this.thumbs) return '...';
+        if (this.thumbs) return this.page.short;
         return this.page.contents;
       },
       getSource() {
@@ -45,6 +45,10 @@
     opacity: 0;
   }
 
+  .page-content .text {
+    text-align: left;
+  }
+
   .page-content.thumbs {
     font-size: 0;
   }
@@ -54,5 +58,11 @@
     height: 0;
     width: 100%;
     padding-bottom: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+    overflow: hidden;
+    background-color: white;
+    line-height: 1.5;
+    color: #000;
   }
 </style>

@@ -97,10 +97,5 @@
 .gallery article {
   overflow: auto;
   padding: 36px 16px;
-  text-align: center;
-}
-
-.gallery article .text {
-  text-align: left;
 }
 </style>
