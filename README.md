@@ -40,6 +40,5 @@ This invokes novella on the pages in the example folder.
 TODO
 ----
 
-* thumbnail generation
 * theme detection
 * layout customization

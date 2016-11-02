@@ -24,6 +24,7 @@
         return this.page.contents;
       },
       getSource() {
+        if (this.thumbs) return this.page.thumb;
         return this.page.src;
       },
       onLoad() { this.hidden = false; },
@@ -32,6 +33,10 @@
 </script>
 
 <style scoped>
+  .page-content {
+    text-align: center;
+  }
+
   .page-content img {
     max-width: 100%;
     width: auto;
