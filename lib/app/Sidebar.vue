@@ -64,9 +64,11 @@
         return imageHeight + PAD * 3;
       },
       scrollToPage(n) {
+        var pagelist = this.$refs.pagelist;
+        if (!pagelist) return;
+
         var index = n-1;
         var scrollTop = this.$el.scrollTop;
-        var pagelist = this.$refs.pagelist;
         var pagelistTop = pagelist.$el.getBoundingClientRect().top;
         var pagetop = this.positions[index];
         var pagebot = this.positions[index + 1];
@@ -74,6 +76,8 @@
       },
       updateVisiblePages() {
         var pagelist = this.$refs.pagelist;
+        if (!pagelist) return;
+
         var pagelistTop = pagelist.$el.getBoundingClientRect().top;
         var height = this.$el.getBoundingClientRect().height;
 
@@ -111,8 +115,7 @@
     },
     watch: {
       store: {
-        handler: function store(val, oldVal) {
-          if (val.pagenum === oldVal.pagenum || !val.showsidebar) return;
+        handler: function store() {
           this.scrollToPage(this.store.pagenum);
         },
         deep: true,
