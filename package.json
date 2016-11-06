@@ -4,6 +4,7 @@
   "description": "Static site generator for web comics.",
   "repository": "git@github.com:cixzhang/Novella.git",
   "dependencies": {
+    "eslint": "^3.9.1",
     "lwip": "0.0.9"
   },
   "devDependencies": {
