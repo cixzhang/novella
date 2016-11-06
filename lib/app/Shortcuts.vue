@@ -13,15 +13,15 @@
   import { store } from './props';
 
   export default {
-    props: { controls: store.controls },
+    props: { store },
     methods: {
       getShortcuts() {
-        var shortcuts = new Set(Object.values(this.controls));
+        var shortcuts = new Set(Object.values(this.store.controls));
         return Array.from(shortcuts);
       },
       getKeys(event) {
-        var controlKeys = Object.keys(this.controls);
-        return controlKeys.filter(key => this.controls[key] === event);
+        var controlKeys = Object.keys(this.store.controls);
+        return controlKeys.filter(key => this.store.controls[key] === event);
       },
     },
   };
@@ -33,19 +33,19 @@
   font-size: 10px;
 }
 
-.shortcut {
+.shortcuts .shortcut {
   display: inline-block;
   margin-right: 1em;
   color: #999;
 }
 
-.shortcut-key {
+.shortcuts .shortcut-key {
   display: inline-block;
   text-transform: uppercase;
   text-align: center;
 }
 
-.shortcut-key span {
+.shortcuts .shortcut-key span {
   display: inline-block;
   line-height: 1.7em;
   height: 1.7em;
@@ -55,12 +55,12 @@
   margin-left: 5px;
 }
 
-.shortcut-key::after {
+.shortcuts .shortcut-key::after {
   content: '/';
   margin-left: 5px;
 }
 
-.shortcut-key:last-of-type::after {
+.shortcuts .shortcut-key:last-of-type::after {
   content: '';
 }
 </style>

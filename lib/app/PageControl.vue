@@ -6,19 +6,15 @@
     <a class="next" :href="getRoute(store.pagenum + 1)" :disabled="!canNext()">
       <span>next</span>
     </a>
-    <Shortcuts :controls="store.controls"></Shortcuts>
+    <slot></slot>
   </div>
 </template>
 
 <script>
-  import Shortcuts from './Shortcuts.vue';
   import { store } from './props';
 
   export default {
     props: { store },
-    components: {
-      Shortcuts,
-    },
     methods: {
       canPrev() { return this.store.pagenum > 1; },
       canNext() { return this.store.pagenum < this.store.pages.length; },
@@ -33,12 +29,11 @@
 
 <style scoped>
 .page-control {
+  width: 100%;
   position: absolute;
   bottom: 0;
   top: auto;
-  left: 16px;
-  right: 16px;
-  bottom: 16px;
+  padding: 16px;
 }
 
 .page-control .prev {
@@ -47,9 +42,5 @@
 
 .page-control .next {
   float: right;
-}
-
-.page-control .shortcuts {
-  clear: both;
 }
 </style>
