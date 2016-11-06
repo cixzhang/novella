@@ -4,13 +4,12 @@
   "description": "Static site generator for web comics.",
   "repository": "git@github.com:cixzhang/Novella.git",
   "dependencies": {
-    "eslint": "^3.9.1",
     "lwip": "0.0.9"
   },
   "devDependencies": {
     "browserify": "^13.1.1",
     "chai": "^2.2.0",
-    "eslint": "^3.8.1",
+    "eslint": "^3.9.1",
     "eslint-plugin-vue": "^0.1.1",
     "markdown": "^0.5.0",
     "mocha": "^2.2.4",
