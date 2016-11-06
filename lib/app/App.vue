@@ -1,24 +1,19 @@
 <template>
   <div class="app">
-    <transition
-      name="slide"
-      v-on:after-enter="$refs.sidebar.scrollToPage(store.pagenum)"
-    >
-      <sidebar v-if="store.showsidebar" :store="store" ref="sidebar"></sidebar>
-    </transition>
-    <gallery :store="store"></gallery>
+    <sidebar :store="store"></sidebar>
+    <page :store="store"></page>
   </div>
 </template>
 
 <script>
   import Sidebar from './Sidebar.vue';
-  import Gallery from './Gallery.vue';
+  import Page from './Page.vue';
   import { store } from './props';
 
   export default {
     props: { store },
     components: {
-      Gallery,
+      Page,
       Sidebar,
     },
   };
@@ -96,7 +91,7 @@ a[disabled] {
   animation-name: close;
 }
 
-.gallery {
+.page {
   flex: 1;
 }
 

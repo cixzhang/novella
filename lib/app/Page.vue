@@ -1,5 +1,5 @@
 <template>
-  <div class="gallery">
+  <div class="page">
     <button class="sidebar-toggle" v-on:click="toggleSidebar()">
       <i v-if="store.showsidebar" class="icon-book-open"></i>
       <i v-else class="icon-book"></i>
@@ -41,7 +41,7 @@
 </script>
 
 <style scoped>
-.gallery {
+.page {
   background: white;
   box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
   min-height: 100%;
@@ -52,7 +52,7 @@
   flex-direction: column;
 }
 
-.gallery .sidebar-toggle {
+.page .sidebar-toggle {
   position: absolute;
   top: 0;
   left: 0;
@@ -69,11 +69,11 @@
   transition: all 0.5s ease;
 }
 
-.gallery .sidebar-toggle:hover {
+.page .sidebar-toggle:hover {
   background-color: rgba(65, 182, 196, 1);
 }
 
-.gallery header {
+.page header {
   width: 100%;
   position: absolute;
   line-height: 36px;
@@ -85,16 +85,16 @@
   opacity: 0.5;
 }
 
-.gallery header span:last-child {
+.page header span:last-child {
   float: right;
 }
 
-.gallery header span:first-child::after {
+.page header span:first-child::after {
   content: ' ›';
   opacity: 0.5;
 }
 
-.gallery article {
+.page article {
   overflow: auto;
   padding: 36px 16px;
 }

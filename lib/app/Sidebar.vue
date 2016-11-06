@@ -1,6 +1,11 @@
 <template>
+  <transition
+    name="slide"
+    v-on:after-enter="scrollToPage(store.pagenum)"
+  >
   <div
     class="sidebar"
+    v-if="store.showsidebar"
     v-on:scroll="updateVisiblePages()"
     :style="{ width: width + 'px', padding: padding + 'px' }">
     <slot></slot>
@@ -13,6 +18,7 @@
       ref="pagelist">
     </page-list>
   </div>
+  </transition>
 </template>
 
 <script>
@@ -105,7 +111,10 @@
     },
     watch: {
       store: {
-        handler: function store() { this.scrollToPage(this.store.pagenum); },
+        handler: function store(val, oldVal) {
+          if (val.pagenum === oldVal.pagenum || !val.showsidebar) return;
+          this.scrollToPage(this.store.pagenum);
+        },
         deep: true,
       },
     },
