@@ -1,7 +1,9 @@
 <template>
   <div class="app">
+    <slot>
     <sidebar :store="store"></sidebar>
     <page :store="store"></page>
+    </slot>
   </div>
 </template>
 
