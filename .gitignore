@@ -4,5 +4,3 @@
 /example
 !/example/pages
 !/example/.eslintignore
-
-/lib/deps.build.js
