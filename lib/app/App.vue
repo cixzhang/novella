@@ -22,7 +22,7 @@
 </script>
 
 <style scoped>
-@import 'icons/css/icons.css';
+@import './icons/css/icons.css';
 
 * {
   box-sizing: border-box;
