@@ -1,34 +1,13 @@
 {
-  "name": "novella",
-  "version": "0.0.0",
-  "description": "Static site generator for web comics.",
-  "repository": "git@github.com:cixzhang/Novella.git",
-  "dependencies": {
-    "lwip": "0.0.9"
-  },
-  "devDependencies": {
-    "browserify": "^13.1.1",
-    "chai": "^2.2.0",
-    "eslint": "^3.9.1",
-    "eslint-plugin-vue": "^0.1.1",
-    "markdown": "^0.5.0",
-    "mocha": "^2.2.4",
-    "natural-compare": "^1.4.0",
-    "optionator": "^0.8.2",
-    "rollup": "^0.36.3",
-    "rollup-plugin-json": "^2.0.2",
-    "rollup-plugin-vue": "^2.2.8",
-    "vue": "^2.0.5"
-  },
-  "main": "lib/novella.js",
-  "bin": "lib/novella.js",
-  "files": [
-    "lib/",
-    "icons/"
-  ],
+  "name": "novella-example",
+  "version": "1.0.0",
+  "description": "",
   "scripts": {
-    "prepublish": "npm run build-deps",
-    "build-deps": "browserify --node -s deps ./lib/deps.js > ./lib/deps.build.js",
-    "build-example": "node ./lib/novella.js example/pages -t Ducks"
+    "novella": "novella ./pages"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "novella": "github:cixzhang/novella"
   }
 }

@@ -1,1 +1,5 @@
-lib/deps.build.js -diff
+icons/* -diff
+thumbs/* -diff
+index.html -diff
+novella.css -diff
+novella.js -diff
