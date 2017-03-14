@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div :class="className">
     <slot>
     <sidebar :store="store"></sidebar>
     <page :store="store"></page>
@@ -14,6 +14,15 @@
 
   export default {
     props: { store },
+    computed: {
+      className() {
+        var className = 'app';
+        if (!this.store.showsidebar) {
+          className += ' hide-sidebar';
+        }
+        return className;
+      },
+    },
     components: {
       Page,
       Sidebar,
@@ -81,23 +90,16 @@ a[disabled] {
   }
 }
 
-.slide-enter-active {
-  animation-direction: normal;
-  animation-duration: 1s;
-  animation-name: open;
-}
-
-.slide-leave-active {
-  animation-direction: normal;
-  animation-duration: 0.5s;
-  animation-name: close;
-}
+.app.hide-sidebar .sidebar { position: absolute; left: -100%; }
 
 .page {
   flex: 1;
+  z-index: 0;
 }
 
 .sidebar {
   flex: 0 0 auto;
+  left: 0%;
+  z-index: 1;
 }
 </style>

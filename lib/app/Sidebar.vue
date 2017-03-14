@@ -5,7 +5,6 @@
   >
   <div
     class="sidebar"
-    v-if="store.showsidebar"
     v-on:scroll="updateVisiblePages()"
     :style="{ width: width + 'px', padding: padding + 'px' }">
     <slot></slot>
@@ -41,7 +40,7 @@
       },
     },
     data: () => ({
-      width: 200,
+      width: 220,
       maxContentHeight: 200,
       padding: 16,
       visiblePages: [],
@@ -131,6 +130,6 @@
   overflow: auto;
   overflow-x: hidden;
   opacity: 1;
-  position: relative;
+  transition: all 0.2s ease;
 }
 </style>
