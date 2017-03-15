@@ -29,14 +29,13 @@
 
 <style>
 .shortcuts {
-  color: #ccc;
   font-size: 10px;
 }
 
 .shortcuts .shortcut {
   display: inline-block;
   margin-right: 1em;
-  color: #999;
+  color: #ccc;
 }
 
 .shortcuts .shortcut-key {
@@ -50,7 +49,7 @@
   line-height: 1.7em;
   height: 1.7em;
   width: 1.7em;
-  border: 1px solid #999;
+  border: 1px solid #ccc;
   border-radius: 3px;
   margin-left: 5px;
 }
