@@ -58,24 +58,17 @@ a[disabled] {
   }
 }
 
-.slide-enter-active {
-  animation-direction: normal;
-  animation-duration: 1s;
-  animation-name: open;
-}
-
-.slide-leave-active {
-  animation-direction: normal;
-  animation-duration: 0.5s;
-  animation-name: close;
-}
+.app.hide-sidebar .sidebar { position: absolute; left: -100%; }
 
 .page {
   flex: 1;
+  z-index: 0;
 }
 
 .sidebar {
   flex: 0 0 auto;
+  left: 0%;
+  z-index: 1;
 }
 
 .sidebar {
@@ -84,7 +77,7 @@ a[disabled] {
   overflow: auto;
   overflow-x: hidden;
   opacity: 1;
-  position: relative;
+  transition: all 0.2s ease;
 }
 
 .page-list {
@@ -222,27 +215,27 @@ a[disabled] {
   border: none;
   background: transparent;
   border-radius: 0 0 5px 0;
-  color: white;
-  background-color: rgba(65, 182, 196, 0.6);
+  color: #333333;
+  opacity: 0.2;
   padding: 0 0 3px 0;
   z-index: 1;
   outline: none;
   transition: all 0.5s ease;
+  cursor: pointer;
 }
 
 .sidebar-toggle:hover {
-  background-color: rgba(65, 182, 196, 1);
+  opacity: 1;
 }
 
 .shortcuts {
-  color: #ccc;
   font-size: 10px;
 }
 
 .shortcuts .shortcut {
   display: inline-block;
   margin-right: 1em;
-  color: #999;
+  color: #ccc;
 }
 
 .shortcuts .shortcut-key {
@@ -256,7 +249,7 @@ a[disabled] {
   line-height: 1.7em;
   height: 1.7em;
   width: 1.7em;
-  border: 1px solid #999;
+  border: 1px solid #ccc;
   border-radius: 3px;
   margin-left: 5px;
 }
