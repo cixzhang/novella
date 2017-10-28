@@ -27,7 +27,7 @@
     "icons/"
   ],
   "scripts": {
-    "prepublish": "npm run build-deps",
+    "prepare": "npm run build-deps",
     "build-deps": "browserify --node -s deps ./lib/deps.js > ./lib/deps.build.js",
     "build-example": "node ./lib/novella.js example/pages -t Ducks"
   }

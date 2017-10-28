@@ -5,7 +5,15 @@
       <page-header :store="store"></page-header>
     </slot>
     <article>
-      <page-content :page="getPage(store.pagenum)" :thumbs="false">
+      <a v-if="isImage(store.pagenum)" :href="getNextRoute(store.pagenum)">
+        <page-content
+          :page="getPage(store.pagenum)"
+          :thumbs="false">
+        </page-content>
+      </a>
+      <page-content v-else
+        :page="getPage(store.pagenum)"
+        :thumbs="false">
       </page-content>
       <slot></slot>
     </article>
@@ -35,8 +43,14 @@
       Shortcuts,
     },
     methods: {
+      isImage(n) { return this.getPage(n).type === 'image'; },
       getPage(n) {
         return this.store.pages[n - 1];
+      },
+      getNextRoute(n) {
+        var route = this.store.pageroute;
+        if (!route) return null;
+        return `${route}/${n + 1}`;
       },
     },
   };
