@@ -15,9 +15,11 @@
     "mocha": "^2.2.4",
     "natural-compare": "^1.4.0",
     "optionator": "^0.8.2",
-    "rollup": "^0.36.3",
+    "rollup": "^0.50.0",
+    "rollup-plugin-commonjs": "^8.2.5",
     "rollup-plugin-json": "^2.0.2",
-    "rollup-plugin-vue": "^2.2.8",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-vue": "^2.2.21",
     "vue": "^2.0.5"
   },
   "main": "lib/novella.js",
@@ -27,8 +29,9 @@
     "icons/"
   ],
   "scripts": {
-    "prepare": "npm run build-deps",
+    "prepublishe": "npm run build-deps",
     "build-deps": "browserify --node -s deps ./lib/deps.js > ./lib/deps.build.js",
-    "build-example": "node ./lib/novella.js example/pages -t Ducks"
+    "build-example": "node ./lib/novella.js example/pages -t Ducks",
+    "build-deps-rollup": "rollup -c"
   }
 }
