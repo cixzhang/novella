@@ -30,7 +30,7 @@
   };
 </script>
 
-<style scoped>
+<style>
 @import './icons/css/icons.css';
 
 * {
