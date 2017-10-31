@@ -25,7 +25,7 @@
   ],
   "scripts": {
     "prepublish": "npm run build",
-    "build": "browserify deps.browserify.js -o lib/deps.build.js --node -s deps -x stylus -x typescript -x less -x uglify-js",
+    "build": "browserify lib/deps.js -o lib/deps.build.js --node -s deps -x stylus -x typescript -x less -x uglify-js",
     "build-example": "node ./lib/novella.js example/pages -t Ducks"
   }
 }
