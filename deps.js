@@ -4,7 +4,7 @@ import { markdown } from 'markdown';
 import optionator from 'optionator';
 import naturalCompare from 'natural-compare';
 import { rollup } from 'rollup';
-import rollupVue from 'rollup-plugin-vue';
+import rollupVue from 'rollup-plugin-vue/dist/rollup-plugin-vue.common';
 import rollupJson from 'rollup-plugin-json';
 
 export default {

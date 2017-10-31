@@ -31,7 +31,9 @@ export default {
     'net',
     'string_decoder',
     'typescript', // used by rollup-plugin-vue
-    'uglifyjs',
+    'uglify-js',
+    'aws-sign2',
+    'stylus',
   ],
 };
 
