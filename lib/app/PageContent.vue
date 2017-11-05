@@ -1,5 +1,8 @@
 <template>
-  <div :class="`page-content novella-bg ${this.thumbs ? 'thumbs' : ''}`">
+  <div :class="`
+    page-content
+    novella-bg
+    ${this.thumbs ? 'thumbs novella-box' : ''}`">
     <img v-if="isImage()"
       v-on:load="onLoad()"
       :data-hidden="hidden"
@@ -15,6 +18,7 @@
       page,
       src: String,
       thumbs: Boolean,
+      className: String,
     },
     data: () => ({ hidden: true }),
     methods: {

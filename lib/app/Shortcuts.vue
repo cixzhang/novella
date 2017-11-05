@@ -3,7 +3,7 @@
     <div class="shortcut" v-for="shortcut in getShortcuts()">
       <span>{{ shortcut }}</span>
       <div class="shortcut-key" v-for="key in getKeys(shortcut)">
-        <span>{{ key }}</span>
+        <span class="novella-tc-bg">{{ key }}</span>
       </div>
     </div>
   </div>
@@ -35,7 +35,7 @@
 .shortcuts .shortcut {
   display: inline-block;
   margin-right: 1em;
-  color: #ccc;
+  opacity: 0.25;
 }
 
 .shortcuts .shortcut-key {
@@ -49,7 +49,6 @@
   line-height: 1.7em;
   height: 1.7em;
   width: 1.7em;
-  border: 1px solid #ccc;
   border-radius: 3px;
   margin-left: 5px;
 }

@@ -7,8 +7,7 @@
       :style="{ top: getPosition(n) + 'px' }">
       <a :href="getRoute(n)">
         <page-content
-          :page="getPage(n)" 
-          :style="contentStyle"
+          :page="getPage(n)"
           :thumbs="true">
         </page-content>
         <div class="pagenum">{{ n }}</div>
@@ -26,7 +25,6 @@
       store,
       positions: Array,
       visiblePages: Array,
-      contentStyle: Object,
     },
     computed: {
       length() { return this.store.pages.length; },
@@ -84,10 +82,9 @@
 
 .page-list .page-content {
   max-height: 100%;
-  box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
 }
 .page-list li[data-highlight] .page-content {
-  border: 1px solid rgba(65, 182, 196, 0.6);
-  box-shadow: 2px 2px 10px 1px rgba(65, 182, 196, 0.2);
+  border-width: 1px;
+  border-style: solid;
 }
 </style>

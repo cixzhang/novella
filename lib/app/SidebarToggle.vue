@@ -28,8 +28,6 @@
   width: 40px;
   border: none;
   background: transparent;
-  border-radius: 0 0 5px 0;
-  color: #333333;
   opacity: 0.2;
   padding: 0 0 3px 0;
   z-index: 1;

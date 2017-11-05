@@ -8,14 +8,15 @@
   },
   "devDependencies": {
     "browserify": "^14.5.0",
-    "vue-template-compiler": "^2.5.2",
     "markdown": "^0.5.0",
     "natural-compare": "^1.4.0",
     "optionator": "^0.8.2",
     "rollup": "^0.50.0",
     "rollup-plugin-json": "^2.0.2",
     "rollup-plugin-vue": "^2.5.2",
-    "vue": "^2.0.5"
+    "tinycolor2": "^1.4.1",
+    "vue": "^2.0.5",
+    "vue-template-compiler": "^2.5.2"
   },
   "main": "lib/novella.js",
   "bin": "lib/novella.js",
