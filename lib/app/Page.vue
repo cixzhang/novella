@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <div class="page novella-bg">
     <slot name="header">
       <sidebar-toggle :store="store"></sidebar-toggle>
       <page-header :store="store"></page-header>
@@ -58,7 +58,6 @@
 
 <style scoped>
 .page {
-  background: white;
   box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.1);
   min-height: 100%;
   min-width: 80%;

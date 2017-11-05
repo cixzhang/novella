@@ -1,5 +1,5 @@
 <template>
-  <div :class="`page-content ${this.thumbs ? 'thumbs' : ''}`">
+  <div :class="`page-content novella-bg ${this.thumbs ? 'thumbs' : ''}`">
     <img v-if="isImage()"
       v-on:load="onLoad()"
       :data-hidden="hidden"
@@ -66,8 +66,6 @@
     padding-left: 8px;
     padding-right: 8px;
     overflow: hidden;
-    background-color: white;
     line-height: 1.5;
-    color: #000;
   }
 </style>

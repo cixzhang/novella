@@ -1,5 +1,5 @@
 <template>
-  <div class="page-header">
+  <div class="page-header novella-bg">
     <span>{{ store.title }}</span>
     <span class="sub"> › </span>
     <span>{{ getPage(store.pagenum).name }}</span>
@@ -29,7 +29,6 @@
   padding: 0 16px 0 48px;
   top: 0;
   left: 0;
-  background: white;
   opacity: 0.5;
 }
 
