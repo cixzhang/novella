@@ -41,8 +41,3 @@ npm run build-example
 
 This invokes novella on the pages in the example folder.
 
-TODO
-----
-
-* theme detection
-* layout customization
