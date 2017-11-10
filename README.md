@@ -6,6 +6,8 @@ A static site generator for web comics.
 Installing
 ----------
 
+Requires Node 6.9 (due to lwip)
+
 ```
 npm install cixzhang/novella
 ```
