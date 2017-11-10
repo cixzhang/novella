@@ -28,6 +28,7 @@ Usage: novella /path/to/pages [options]
   --background-color, --bg String  Background color.
   --highlight-color, --hc String   Highlight color.
   --text-color, --tc String        Text color.
+  --detect-theme, --dt String      Pass in the filename of a page to detect the theme.
 ```
 
 Example
